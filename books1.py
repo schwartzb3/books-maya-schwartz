@@ -8,11 +8,15 @@ def readFile(file, action):
     x = 0
     if action == 'author':
         x = 2
-    with open(file, newline='') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            lines.append(row[x])
-    return lines
+    try:
+        with open(file, newline='') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                lines.append(row[x])
+        return lines
+    except:
+        print("Usage: Invalid file name", file=sys.stderr)
+        sys.exit()
 
 def takeLast(elem):
     return elem[-1]
@@ -44,7 +48,23 @@ def printNames(lines, action):
                 printableName += item + ' '
             print(printableName)
 
+def checkExceptions(initials):
+    if len(initials) < 3:
+        print('Usage: Not enough arguments supplied', file=sys.stderr)
+        sys.exit()
+    elif initials[2] != 'authors' and initials[2] != 'books':
+        print('Usage: Invalid action', file=sys.stderr)
+        sys.exit()
+    elif len(initials) == 4:
+        if initials[3] != 'forward' and initials[3] != 'reverse':
+            print('Usage: Invalid direction supplied', file=sys.stderr)
+            sys.exit()
+    elif len(initials) > 4:
+        print('Usage: Too many arguments supplied', file=sys.stderr)
+        sys.exit()
+
 def main():
+    checkExceptions(sys.argv)
     file = sys.argv[1]
     action = sys.argv[2]
     dir = True
