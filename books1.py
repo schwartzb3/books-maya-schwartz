@@ -6,7 +6,7 @@ import re
 def readFile(file, action):
     lines = []
     x = 0
-    if action == 'authors’:
+    if action == "authors":
         x = 2
     try:
         with open(file, newline='') as f:
